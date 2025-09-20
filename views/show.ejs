@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= post.title %> - IMUForum</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+    <header>
+        <h1><%= post.title %></h1>
+        <p>Category: <%= post.category %></p>
+        <p>Author: <%= post.author %></p>
+    </header>
+
+    <main>
+        <article>
+            <p><%= post.content %></p>
+        </article>
+
+        <section class="like-button">
+            <form action="/posts/<%= post._id %>/like" method="POST">
+                <button type="submit">Like (<%= post.likes %>)</button>
+            </form>
+        </section>
+
+        <section class="comments">
+            <h2>Comments</h2>
+            <% if (comments && comments.length > 0) { %>
+                <ul>
+                    <% comments.forEach(function(comment) { %>
+                        <li>
+                            <strong><%= comment.author %>:</strong> <%= comment.text %>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                <p>No comments yet. Be the first to comment!</p>
+            <% } %>
+
+            <% if (user) { %>
+                <form action="/posts/<%= post._id %>/comments" method="POST">
+                    <textarea name="text" rows="4" cols="50" placeholder="Add your comment here..." required></textarea><br>
+                    <button type="submit">Add Comment</button>
+                </form>
+            <% } else { %>
+                <p>You must be <a href="/login">logged in</a> to add a comment.</p>
+            <% } %>
+        </section>
+    </main>
+</body>
+</html>

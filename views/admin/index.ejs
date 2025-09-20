@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli - IMUForum</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: #f5f7fa;
+            color: #333;
+        }
+        .navbar {
+            background-color: #dc3545;
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a, .navbar span {
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 12px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 24px auto;
+            width: 90%;
+        }
+        .admin-header {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .admin-header h1 {
+            color: #dc3545;
+            margin-bottom: 10px;
+        }
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+        .post-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            position: relative;
+        }
+        .post-card h3 {
+            margin: 0 0 12px;
+            color: #0047ab;
+            font-size: 1.3rem;
+        }
+        .post-card p {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .category {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #007bff;
+            background: #e1eaff;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .no-posts {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/">IMUForum</a>
+        <div>
+            <span>Admin Paneli</span>
+            <a href="/">Ana Sayfa</a>
+            <a href="/profile">Profil</a>
+            <a href="/logout">Çıkış Yap</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="admin-header">
+            <h1>Admin Paneli</h1>
+            <p>Hoş geldiniz, <%= currentUser.username %>. Tüm gönderileri buradan yönetebilirsiniz.</p>
+        </div>
+
+        <% if (posts && posts.length > 0) { %>
+            <div class="posts-grid">
+                <% posts.forEach(function(post) { %>
+                    <div class="post-card">
+                        <div class="post-meta">
+                            <span><strong><%= post.author.username %></strong></span>
+                            <span><%= post.createdAt.toLocaleDateString('tr-TR') %></span>
+                        </div>
+                        <h3><%= post.baslik %></h3>
+                        <p><%= post.icerik ? (post.icerik.length > 150 ? post.icerik.substring(0, 147) + '...' : post.icerik) : '' %></p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="category"><%= post.kategori %></span>
+                            <span style="font-size: 0.8rem; color: #666;">
+                                <%= post.likes ? post.likes.length : 0 %> beğeni | 
+                                <%= post.comments ? post.comments.length : 0 %> yorum
+                            </span>
+                        </div>
+                        <div class="admin-actions">
+                            <a href="/posts/<%= post._id %>" class="btn btn-secondary">Görüntüle</a>
+                            <form action="/admin/posts/<%= post._id %>?_method=DELETE" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Bu gönderiyi silmek istediğinizden emin misiniz?')">
+                                    Sil
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } else { %>
+            <div class="no-posts">
+                <p>Henüz hiç gönderi yok.</p>
+            </div>
+        <% } %>
+    </main>
+</body>
+</html>
+

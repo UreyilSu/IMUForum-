@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= currentCategory %> - IMUGOSSIP</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Geometric Background Shapes */
+    .geometric-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .shape {
+      position: absolute;
+      opacity: 0.08;
+      animation: float 25s infinite ease-in-out;
+    }
+    
+    .shape:nth-child(1) {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+      border-radius: 15px;
+      top: 15%;
+      left: 8%;
+      animation-delay: 0s;
+      transform: rotate(45deg);
+    }
+    
+    .shape:nth-child(2) {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(45deg, #4ecdc4, #44a08d);
+      border-radius: 50%;
+      top: 25%;
+      right: 12%;
+      animation-delay: 3s;
+    }
+    
+    .shape:nth-child(3) {
+      width: 0;
+      height: 0;
+      border-left: 30px solid transparent;
+      border-right: 30px solid transparent;
+      border-bottom: 50px solid rgba(255, 193, 7, 0.3);
+      top: 35%;
+      left: 15%;
+      animation-delay: 6s;
+    }
+    
+    .shape:nth-child(4) {
+      width: 80px;
+      height: 40px;
+      background: linear-gradient(45deg, #a8e6cf, #7fcdcd);
+      border-radius: 20px;
+      top: 45%;
+      right: 20%;
+      animation-delay: 9s;
+      transform: rotate(-30deg);
+    }
+    
+    .shape:nth-child(5) {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, #ffd3a5, #fd9853);
+      border-radius: 50%;
+      bottom: 25%;
+      left: 10%;
+      animation-delay: 12s;
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      25% {
+        transform: translateY(-15px) rotate(3deg);
+      }
+      50% {
+        transform: translateY(-8px) rotate(-3deg);
+      }
+      75% {
+        transform: translateY(-25px) rotate(2deg);
+      }
+    }
+    
+    .floating-dots {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .dot {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      animation: float-dots 18s infinite linear;
+    }
+    
+    .dot:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; }
+    .dot:nth-child(2) { top: 30%; left: 80%; animation-delay: 3s; }
+    .dot:nth-child(3) { top: 50%; left: 30%; animation-delay: 6s; }
+    .dot:nth-child(4) { top: 70%; left: 70%; animation-delay: 9s; }
+    .dot:nth-child(5) { top: 80%; left: 15%; animation-delay: 12s; }
+    
+    @keyframes float-dots {
+      0%, 100% {
+        transform: translateY(0px) scale(1);
+        opacity: 0.2;
+      }
+      50% {
+        transform: translateY(-25px) scale(1.1);
+        opacity: 0.4;
+      }
+    }
+    
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      color: #333;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar a, .navbar span {
+      color: #333;
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 16px;
+      transition: color 0.3s ease;
+    }
+    
+    .navbar a:hover {
+      color: #667eea;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #667eea;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      width: 90%;
+    }
+    
+    .category-header {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    
+    .category-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+    
+    .category-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #333;
+    }
+    
+    .category-description {
+      font-size: 1.1rem;
+      color: #666;
+      margin-bottom: 30px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .new-post-btn {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      padding: 15px 30px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    
+    .new-post-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .posts-section {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #333;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .posts-count {
+      background: #f8f9fa;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 24px;
+    }
+    
+    .post-card {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      border-left: 4px solid #667eea;
+      position: relative;
+    }
+    
+    .post-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .post-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.3rem;
+      color: #333;
+    }
+    
+    .post-card h3 a {
+      color: #333;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .post-card h3 a:hover {
+      color: #667eea;
+    }
+    
+    .post-card p {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    
+    .post-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #888;
+    }
+    
+    .author-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .post-stats {
+      display: flex;
+      gap: 12px;
+    }
+    
+    .stat {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 80px 20px;
+      color: #666;
+    }
+    
+    .empty-state h3 {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      color: #333;
+    }
+    
+    .empty-state p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+    
+    .breadcrumb {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 12px 20px;
+      border-radius: 25px;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+    
+    .breadcrumb a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+    
+    .breadcrumb a:hover {
+      opacity: 1;
+    }
+    
+    .breadcrumb span {
+      color: white;
+      margin: 0 8px;
+    }
+    
+    @media (max-width: 768px) {
+      .category-title {
+        font-size: 2rem;
+      }
+      
+      .posts-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .container {
+        margin: 20px auto;
+        width: 95%;
+      }
+      
+      .section-title {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Geometric Background Shapes -->
+  <div class="geometric-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  
+  <!-- Floating Dots -->
+  <div class="floating-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <nav class="navbar">
+    <a href="/" class="logo">IMUGOSSIP</a>
+    <div>
+      <% if (!currentUser) { %>
+        <a href="/login">Giriş Yap</a>
+        <a href="/register">Kayıt Ol</a>
+      <% } else { %>
+        <span><%= currentUser.username %> olarak giriş yapıldı</span>
+        <a href="/logout">Çıkış Yap</a>
+      <% } %>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="/">Ana Sayfa</a>
+      <span>></span>
+      <span><%= currentCategory %></span>
+    </div>
+
+    <!-- Category Header -->
+    <div class="category-header">
+      <span class="category-icon"><%= categoryIcon %></span>
+      <h1 class="category-title"><%= currentCategory %></h1>
+      <p class="category-description"><%= categoryDescription %></p>
+      <% if (currentUser) { %>
+        <a href="/posts/new?category=<%= encodeURIComponent(currentCategory) %>" class="new-post-btn">
+          + <%= currentCategory %> için Yeni Başlık Aç
+        </a>
+      <% } %>
+    </div>
+
+    <!-- Posts Section -->
+    <div class="posts-section">
+      <h2 class="section-title">
+        <%= currentCategory %> Başlıkları
+        <span class="posts-count"><%= posts.length %> başlık</span>
+      </h2>
+
+      <% if (posts && posts.length > 0) { %>
+        <div class="posts-grid">
+          <% posts.forEach(function(post) { %>
+            <div class="post-card">
+              <h3><a href="/posts/<%= post._id %>"><%= post.baslik %></a></h3>
+              <p><%= post.icerik ? (post.icerik.length > 150 ? post.icerik.substring(0, 147) + '...' : post.icerik) : '' %></p>
+              <div class="post-meta">
+                <div class="author-info">
+                  <span>👤 <%= post.author.username %></span>
+                  <span>📅 <%= post.createdAt.toLocaleDateString('tr-TR') %></span>
+                </div>
+                <div class="post-stats">
+                  <div class="stat">
+                    <span>❤️</span>
+                    <span><%= post.likes ? post.likes.length : 0 %></span>
+                  </div>
+                  <div class="stat">
+                    <span>💬</span>
+                    <span><%= post.comments ? post.comments.length : 0 %></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      <% } else { %>
+        <div class="empty-state">
+          <h3>Bu kategoride henüz başlık yok</h3>
+          <p><%= currentCategory %> kategorisinde henüz hiç başlık bulunmuyor.</p>
+          <% if (currentUser) { %>
+            <a href="/posts/new?category=<%= encodeURIComponent(currentCategory) %>" class="new-post-btn">
+              + İlk Başlığı Siz Açın!
+            </a>
+          <% } else { %>
+            <p>Başlık açmak için <a href="/login" style="color: #667eea; text-decoration: none;">giriş yapın</a>.</p>
+          <% } %>
+        </div>
+      <% } %>
+    </div>
+  </main>
+</body>
+</html>

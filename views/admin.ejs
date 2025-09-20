@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+    </nav>
+    <h1>Admin Panel</h1>
+    <h2>All Posts</h2>
+    <ul>
+        <% posts.forEach(function(post) { %>
+            <li>
+                <strong>Title:</strong> <%= post.title %> | 
+                <strong>Category:</strong> <%= post.category %>
+                <form action="/admin/posts/<%= post._id %>?_method=DELETE" method="POST" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        <% }) %>
+    </ul>
+</body>
+</html>

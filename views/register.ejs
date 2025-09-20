@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kayıt Ol</title>
+</head>
+<body>
+    <h1>Kayıt Ol</h1>
+    <% if (typeof error !== 'undefined') { %>
+        <div style="background:#ffeaea; color:#c00; border:1px solid #c00; padding:10px 15px; margin-bottom:15px; border-radius:5px; max-width:400px;">
+            <%= error %>
+        </div>
+    <% } %>
+    <div style="max-width:400px; margin:auto; padding:24px 30px; border-radius:8px; background:#f8f8f8; box-shadow:0 2px 8px #0001;">
+        <form action="/register" method="POST" style="display:flex; flex-direction:column; gap:16px;">
+            <div style="display:flex; flex-direction:column;">
+                <label for="username" style="margin-bottom:4px;">Kullanıcı Adı</label>
+                <input type="text" id="username" name="username" placeholder="Kullanıcı Adı" required style="padding:8px; border-radius:4px; border:1px solid #ccc;">
+            </div>
+            <div style="display:flex; flex-direction:column;">
+                <label for="email" style="margin-bottom:4px;">E-posta</label>
+                <input type="email" id="email" name="email" placeholder="E-posta" required style="padding:8px; border-radius:4px; border:1px solid #ccc;">
+            </div>
+            <div style="display:flex; flex-direction:column;">
+                <label for="password" style="margin-bottom:4px;">Şifre</label>
+                <input type="password" id="password" name="password" placeholder="Şifre" required style="padding:8px; border-radius:4px; border:1px solid #ccc;">
+            </div>
+            <button type="submit" style="padding:10px; border-radius:4px; background:#1976d2; color:white; border:none; font-weight:bold; cursor:pointer;">Kayıt Ol</button>
+        </form>
+        <div style="margin-top:16px; text-align:center;">
+            <a href="/login" style="color:#1976d2; text-decoration:none;">Zaten hesabınız var mı? Giriş Yap</a>
+        </div>
+    </div>
+</body>
+</html>

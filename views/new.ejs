@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= currentCategory %> - Yeni Başlık</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="text"], textarea {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            resize: vertical;
+        }
+        textarea {
+            min-height: 120px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1><%= currentCategory %> kategorisi için yeni başlık aç</h1>
+    <form action="/posts" method="POST">
+        <input type="text" name="title" placeholder="Başlık yazın" required>
+        <textarea name="content" placeholder="İçeriği yazın" required></textarea>
+        <input type="hidden" name="currentCategory" value="<%= currentCategory %>">
+        <button type="submit">Oluştur</button>
+    </form>
+    <a href="/categories/<%= encodeURIComponent(currentCategory) %>">Geri Dön</a>
+</body>
+</html>

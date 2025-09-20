@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IMUGOSSIP - Anasayfa</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Geometric Background Shapes */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .geometric-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .shape {
+      position: absolute;
+      opacity: 0.1;
+      animation: float 20s infinite ease-in-out;
+    }
+    
+    .shape:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+      border-radius: 20px;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+      transform: rotate(45deg);
+    }
+    
+    .shape:nth-child(2) {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(45deg, #4ecdc4, #44a08d);
+      border-radius: 50%;
+      top: 20%;
+      right: 15%;
+      animation-delay: 2s;
+    }
+    
+    .shape:nth-child(3) {
+      width: 0;
+      height: 0;
+      border-left: 40px solid transparent;
+      border-right: 40px solid transparent;
+      border-bottom: 70px solid rgba(255, 193, 7, 0.3);
+      top: 30%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+    
+    .shape:nth-child(4) {
+      width: 100px;
+      height: 50px;
+      background: linear-gradient(45deg, #a8e6cf, #7fcdcd);
+      border-radius: 25px;
+      top: 40%;
+      right: 25%;
+      animation-delay: 6s;
+      transform: rotate(-30deg);
+    }
+    
+    .shape:nth-child(5) {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(45deg, #ffd3a5, #fd9853);
+      border-radius: 50%;
+      bottom: 30%;
+      left: 15%;
+      animation-delay: 8s;
+    }
+    
+    .shape:nth-child(6) {
+      width: 0;
+      height: 0;
+      border-left: 30px solid transparent;
+      border-right: 30px solid transparent;
+      border-bottom: 50px solid rgba(138, 43, 226, 0.3);
+      bottom: 20%;
+      right: 20%;
+      animation-delay: 10s;
+      transform: rotate(60deg);
+    }
+    
+    .shape:nth-child(7) {
+      width: 90px;
+      height: 30px;
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      border-radius: 15px;
+      top: 60%;
+      left: 30%;
+      animation-delay: 12s;
+      transform: rotate(15deg);
+    }
+    
+    .shape:nth-child(8) {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(45deg, #f093fb, #f5576c);
+      border-radius: 10px;
+      top: 70%;
+      right: 10%;
+      animation-delay: 14s;
+      transform: rotate(-45deg);
+    }
+    
+    .shape:nth-child(9) {
+      width: 0;
+      height: 0;
+      border-left: 25px solid transparent;
+      border-right: 25px solid transparent;
+      border-bottom: 45px solid rgba(76, 175, 80, 0.3);
+      bottom: 60%;
+      left: 5%;
+      animation-delay: 16s;
+      transform: rotate(-30deg);
+    }
+    
+    .shape:nth-child(10) {
+      width: 120px;
+      height: 40px;
+      background: linear-gradient(45deg, #84fab0, #8fd3f4);
+      border-radius: 20px;
+      bottom: 10%;
+      right: 5%;
+      animation-delay: 18s;
+      transform: rotate(25deg);
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      25% {
+        transform: translateY(-20px) rotate(5deg);
+      }
+      50% {
+        transform: translateY(-10px) rotate(-5deg);
+      }
+      75% {
+        transform: translateY(-30px) rotate(3deg);
+      }
+    }
+    
+    /* Additional floating elements */
+    .floating-dots {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .dot {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: float-dots 15s infinite linear;
+    }
+    
+    .dot:nth-child(1) { top: 15%; left: 25%; animation-delay: 0s; }
+    .dot:nth-child(2) { top: 25%; left: 75%; animation-delay: 2s; }
+    .dot:nth-child(3) { top: 35%; left: 45%; animation-delay: 4s; }
+    .dot:nth-child(4) { top: 45%; left: 15%; animation-delay: 6s; }
+    .dot:nth-child(5) { top: 55%; left: 85%; animation-delay: 8s; }
+    .dot:nth-child(6) { top: 65%; left: 35%; animation-delay: 10s; }
+    .dot:nth-child(7) { top: 75%; left: 65%; animation-delay: 12s; }
+    .dot:nth-child(8) { top: 85%; left: 25%; animation-delay: 14s; }
+    
+    @keyframes float-dots {
+      0%, 100% {
+        transform: translateY(0px) scale(1);
+        opacity: 0.3;
+      }
+      50% {
+        transform: translateY(-30px) scale(1.2);
+        opacity: 0.6;
+      }
+    }
+    
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      color: #333;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar a, .navbar span {
+      color: #333;
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 16px;
+      transition: color 0.3s ease;
+    }
+    
+    .navbar a:hover {
+      color: #667eea;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #667eea;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      width: 90%;
+    }
+    
+    .welcome-section {
+      text-align: center;
+      margin-bottom: 50px;
+      color: white;
+    }
+    
+    .welcome-section h1 {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    
+    .welcome-section p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+    
+    .category-card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .category-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+    }
+    
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+    
+    .category-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      display: block;
+    }
+    
+    .category-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #333;
+    }
+    
+    .category-description {
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    .category-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: #888;
+    }
+    
+    .category-count {
+      background: #f8f9fa;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    
+    .admin-panel-btn {
+      background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    
+    .admin-panel-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    }
+    
+    .posts-section {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-top: 40px;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #333;
+      text-align: center;
+    }
+    
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    
+    .post-card {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      border-left: 4px solid #667eea;
+    }
+    
+    .post-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    
+    .post-card h3 {
+      margin: 0 0 12px;
+      font-size: 1.3rem;
+      color: #333;
+    }
+    
+    .post-card h3 a {
+      color: #333;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .post-card h3 a:hover {
+      color: #667eea;
+    }
+    
+    .post-card p {
+      color: #666;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    
+    .post-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #888;
+    }
+    
+    .category-badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+      padding: 4px 12px;
+      border-radius: 15px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #666;
+    }
+    
+    .empty-state h3 {
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+      color: #333;
+    }
+    
+    @media (max-width: 768px) {
+      .welcome-section h1 {
+        font-size: 2rem;
+      }
+      
+      .categories-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .container {
+        margin: 20px auto;
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Geometric Background Shapes -->
+  <div class="geometric-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  
+  <!-- Floating Dots -->
+  <div class="floating-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <nav class="navbar">
+    <a href="/" class="logo">IMUGOSSIP</a>
+    <div>
+      <% if (!currentUser) { %>
+        <a href="/login">Giriş Yap</a>
+        <a href="/register">Kayıt Ol</a>
+      <% } else { %>
+        <span><%= currentUser.username %> olarak giriş yapıldı</span>
+        <a href="/logout">Çıkış Yap</a>
+      <% } %>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+      <h1>Hoş Geldiniz!</h1>
+      <p>İlginizi çeken konuları keşfedin ve topluluğa katılın</p>
+    </div>
+
+    <!-- Admin Panel Button -->
+    <% if (currentUser && currentUser.isAdmin) { %>
+      <div style="text-align: center;">
+        <a href="/admin" class="admin-panel-btn">🔧 Admin Paneli</a>
+      </div>
+    <% } %>
+
+    <!-- Categories Grid -->
+    <div class="categories-grid">
+      <div class="category-card" onclick="window.location.href='/category/Genel'">
+        <span class="category-icon">💬</span>
+        <h3 class="category-title">Genel</h3>
+        <p class="category-description">Genel konular, sohbet ve güncel olaylar hakkında konuşun</p>
+        <div class="category-stats">
+          <span class="category-count">Genel başlıklar</span>
+          <span>→</span>
+        </div>
+      </div>
+
+      <div class="category-card" onclick="window.location.href='/category/Dedikodu'">
+        <span class="category-icon">🗣️</span>
+        <h3 class="category-title">Dedikodu</h3>
+        <p class="category-description">Kampüs dedikoduları ve güncel olaylar</p>
+        <div class="category-stats">
+          <span class="category-count">Dedikodu başlıkları</span>
+          <span>→</span>
+        </div>
+      </div>
+
+      <div class="category-card" onclick="window.location.href='/category/Öğrenciler'">
+        <span class="category-icon">👥</span>
+        <h3 class="category-title">Öğrenciler</h3>
+        <p class="category-description">Öğrenci hayatı, etkinlikler ve deneyimler</p>
+        <div class="category-stats">
+          <span class="category-count">Öğrenci başlıkları</span>
+          <span>→</span>
+        </div>
+      </div>
+
+      <div class="category-card" onclick="window.location.href='/category/Hocalar'">
+        <span class="category-icon">👨‍🏫</span>
+        <h3 class="category-title">Hocalar</h3>
+        <p class="category-description">Hocalar, dersler ve akademik deneyimler</p>
+        <div class="category-stats">
+          <span class="category-count">Hoca başlıkları</span>
+          <span>→</span>
+        </div>
+      </div>
+
+      <div class="category-card" onclick="window.location.href='/category/İtiraf'">
+        <span class="category-icon">💭</span>
+        <h3 class="category-title">İtiraf</h3>
+        <p class="category-description">Anonim itiraflar ve kişisel deneyimler</p>
+        <div class="category-stats">
+          <span class="category-count">İtiraf başlıkları</span>
+          <span>→</span>
+        </div>
+      </div>
+
+      <div class="category-card" onclick="window.location.href='/category/Teknoloji'">
+        <span class="category-icon">💻</span>
+        <h3 class="category-title">Teknoloji</h3>
+        <p class="category-description">Teknoloji, yazılım, donanım ve dijital dünya hakkında</p>
+        <div class="category-stats">
+          <span class="category-count">Teknoloji başlıkları</span>
+          <span>→</span>
+        </div>
+      </div>
+
+      <div class="category-card" onclick="window.location.href='/category/Eğitim'">
+        <span class="category-icon">📚</span>
+        <h3 class="category-title">Eğitim</h3>
+        <p class="category-description">Eğitim, öğrenme, kurslar ve akademik konular</p>
+        <div class="category-stats">
+          <span class="category-count">Eğitim başlıkları</span>
+          <span>→</span>
+        </div>
+      </div>
+
+      <div class="category-card" onclick="window.location.href='/category/Spor'">
+        <span class="category-icon">⚽</span>
+        <h3 class="category-title">Spor</h3>
+        <p class="category-description">Spor haberleri, maçlar ve spor aktiviteleri</p>
+        <div class="category-stats">
+          <span class="category-count">Spor başlıkları</span>
+          <span>→</span>
+        </div>
+      </div>
+
+      <div class="category-card" onclick="window.location.href='/category/Sanat'">
+        <span class="category-icon">🎨</span>
+        <h3 class="category-title">Sanat</h3>
+        <p class="category-description">Resim, heykel, tasarım ve sanat dünyası</p>
+        <div class="category-stats">
+          <span class="category-count">Sanat başlıkları</span>
+          <span>→</span>
+        </div>
+      </div>
+
+      <div class="category-card" onclick="window.location.href='/category/Müzik'">
+        <span class="category-icon">🎵</span>
+        <h3 class="category-title">Müzik</h3>
+        <p class="category-description">Müzik türleri, sanatçılar ve konserler</p>
+        <div class="category-stats">
+          <span class="category-count">Müzik başlıkları</span>
+          <span>→</span>
+        </div>
+      </div>
+
+      <div class="category-card" onclick="window.location.href='/category/Film'">
+        <span class="category-icon">🎬</span>
+        <h3 class="category-title">Film</h3>
+        <p class="category-description">Filmler, diziler ve sinema dünyası</p>
+        <div class="category-stats">
+          <span class="category-count">Film başlıkları</span>
+          <span>→</span>
+        </div>
+      </div>
+
+      <div class="category-card" onclick="window.location.href='/category/Kitap'">
+        <span class="category-icon">📖</span>
+        <h3 class="category-title">Kitap</h3>
+        <p class="category-description">Kitaplar, yazarlar ve edebiyat dünyası</p>
+        <div class="category-stats">
+          <span class="category-count">Kitap başlıkları</span>
+          <span>→</span>
+        </div>
+      </div>
+
+      <div class="category-card" onclick="window.location.href='/category/Oyun'">
+        <span class="category-icon">🎮</span>
+        <h3 class="category-title">Oyun</h3>
+        <p class="category-description">Video oyunları, oyun geliştirme ve oyun kültürü</p>
+        <div class="category-stats">
+          <span class="category-count">Oyun başlıkları</span>
+          <span>→</span>
+        </div>
+      </div>
+
+      <div class="category-card" onclick="window.location.href='/category/Diğer'">
+        <span class="category-icon">🔧</span>
+        <h3 class="category-title">Diğer</h3>
+        <p class="category-description">Diğer kategorilere uymayan konular</p>
+        <div class="category-stats">
+          <span class="category-count">Diğer başlıklar</span>
+          <span>→</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; margin-top: 60px; color: rgba(255, 255, 255, 0.8);">
+      <p>IMUGOSSIP - Kampüs Forumu</p>
+    </div>
+
+  </main>
+</body>
+</html>

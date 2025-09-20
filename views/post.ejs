@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= post.baslik %> - IMUGOSSIP</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Geometric Background Shapes */
+    .geometric-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .shape {
+      position: absolute;
+      opacity: 0.06;
+      animation: float 30s infinite ease-in-out;
+    }
+    
+    .shape:nth-child(1) {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+      border-radius: 18px;
+      top: 12%;
+      left: 5%;
+      animation-delay: 0s;
+      transform: rotate(45deg);
+    }
+    
+    .shape:nth-child(2) {
+      width: 55px;
+      height: 55px;
+      background: linear-gradient(45deg, #4ecdc4, #44a08d);
+      border-radius: 50%;
+      top: 22%;
+      right: 8%;
+      animation-delay: 5s;
+    }
+    
+    .shape:nth-child(3) {
+      width: 0;
+      height: 0;
+      border-left: 35px solid transparent;
+      border-right: 35px solid transparent;
+      border-bottom: 60px solid rgba(255, 193, 7, 0.3);
+      top: 32%;
+      left: 12%;
+      animation-delay: 10s;
+    }
+    
+    .shape:nth-child(4) {
+      width: 90px;
+      height: 45px;
+      background: linear-gradient(45deg, #a8e6cf, #7fcdcd);
+      border-radius: 22px;
+      top: 42%;
+      right: 15%;
+      animation-delay: 15s;
+      transform: rotate(-30deg);
+    }
+    
+    .shape:nth-child(5) {
+      width: 65px;
+      height: 65px;
+      background: linear-gradient(45deg, #ffd3a5, #fd9853);
+      border-radius: 50%;
+      bottom: 20%;
+      left: 8%;
+      animation-delay: 20s;
+    }
+    
+    .shape:nth-child(6) {
+      width: 0;
+      height: 0;
+      border-left: 28px solid transparent;
+      border-right: 28px solid transparent;
+      border-bottom: 48px solid rgba(138, 43, 226, 0.3);
+      bottom: 15%;
+      right: 12%;
+      animation-delay: 25s;
+      transform: rotate(60deg);
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+      }
+      25% {
+        transform: translateY(-18px) rotate(4deg);
+      }
+      50% {
+        transform: translateY(-10px) rotate(-4deg);
+      }
+      75% {
+        transform: translateY(-28px) rotate(2deg);
+      }
+    }
+    
+    .floating-dots {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .dot {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      animation: float-dots 20s infinite linear;
+    }
+    
+    .dot:nth-child(1) { top: 18%; left: 18%; animation-delay: 0s; }
+    .dot:nth-child(2) { top: 28%; left: 82%; animation-delay: 4s; }
+    .dot:nth-child(3) { top: 48%; left: 25%; animation-delay: 8s; }
+    .dot:nth-child(4) { top: 68%; left: 75%; animation-delay: 12s; }
+    .dot:nth-child(5) { top: 78%; left: 12%; animation-delay: 16s; }
+    .dot:nth-child(6) { top: 88%; left: 65%; animation-delay: 20s; }
+    
+    @keyframes float-dots {
+      0%, 100% {
+        transform: translateY(0px) scale(1);
+        opacity: 0.15;
+      }
+      50% {
+        transform: translateY(-22px) scale(1.05);
+        opacity: 0.3;
+      }
+    }
+    
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      color: #333;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .navbar a, .navbar span {
+      color: #333;
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 16px;
+      transition: color 0.3s ease;
+    }
+    
+    .navbar a:hover {
+      color: #667eea;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #667eea;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      width: 90%;
+    }
+    
+    .post-container {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 40px;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .post-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+    }
+    
+    .post-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 30px;
+    }
+    
+    .post-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #333;
+      line-height: 1.2;
+      margin: 0;
+    }
+    
+    .post-actions {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-edit {
+      background-color: #28a745;
+      color: white;
+    }
+    
+    .btn-delete {
+      background-color: #dc3545;
+      color: white;
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      font-size: 1rem;
+      color: #666;
+    }
+    
+    .category-badge {
+      background: rgba(102, 126, 234, 0.1);
+      color: #667eea;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    .post-image {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .post-content {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 40px;
+    }
+    
+    .likes-section {
+      margin-bottom: 40px;
+      padding-top: 30px;
+      border-top: 2px solid #f0f0f0;
+    }
+    
+    .like-btn {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .like-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .like-btn.liked {
+      background: #dc3545;
+    }
+    
+    .like-btn.liked:hover {
+      box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+    }
+    
+    .comments-section {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      padding: 40px;
+    }
+    
+    .comments-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #333;
+    }
+    
+    .comment {
+      background: #f8f9fa;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 4px solid #667eea;
+    }
+    
+    .comment-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .comment-author {
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .comment-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    
+    .comment-like-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+    
+    .comment-like-btn.liked {
+      color: #dc3545;
+    }
+    
+    .comment-like-btn:not(.liked) {
+      color: #666;
+    }
+    
+    .comment-delete-btn {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    
+    .comment-content {
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    
+    .comment-date {
+      color: #666;
+      font-size: 0.85rem;
+    }
+    
+    .comment-form {
+      margin-top: 30px;
+    }
+    
+    .comment-textarea {
+      width: 100%;
+      padding: 16px;
+      border: 2px solid #e1e5e9;
+      border-radius: 12px;
+      font-size: 16px;
+      resize: vertical;
+      min-height: 120px;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+    
+    .comment-textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    
+    .comment-submit {
+      background: linear-gradient(45deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .comment-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .breadcrumb {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 12px 20px;
+      border-radius: 25px;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+    
+    .breadcrumb a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+    
+    .breadcrumb a:hover {
+      opacity: 1;
+    }
+    
+    .breadcrumb span {
+      color: white;
+      margin: 0 8px;
+    }
+    
+    .empty-comments {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        margin: 20px auto;
+        width: 95%;
+      }
+      
+      .post-container, .comments-section {
+        padding: 24px;
+      }
+      
+      .post-title {
+        font-size: 2rem;
+      }
+      
+      .post-header {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .post-actions {
+        align-self: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Geometric Background Shapes -->
+  <div class="geometric-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  
+  <!-- Floating Dots -->
+  <div class="floating-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <nav class="navbar">
+    <a href="/" class="logo">IMUGOSSIP</a>
+    <div>
+      <% if (!currentUser) { %>
+        <a href="/login">Giriş Yap</a>
+        <a href="/register">Kayıt Ol</a>
+      <% } else { %>
+        <span><%= currentUser.username %> olarak giriş yapıldı</span>
+        <a href="/logout">Çıkış Yap</a>
+      <% } %>
+    </div>
+  </nav>
+
+  <main class="container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a href="/">Ana Sayfa</a>
+      <span>></span>
+      <a href="/category/<%= encodeURIComponent(post.kategori) %>"><%= post.kategori %></a>
+      <span>></span>
+      <span><%= post.baslik %></span>
+    </div>
+
+    <!-- Post Content -->
+    <div class="post-container">
+      <div class="post-header">
+        <h1 class="post-title"><%= post.baslik %></h1>
+        <% if (currentUser && (currentUser._id.toString() === post.author._id.toString() || currentUser.isAdmin)) { %>
+          <div class="post-actions">
+            <a href="/posts/<%= post._id %>/edit" class="btn btn-edit">✏️ Düzenle</a>
+            <form action="/posts/<%= post._id %>?_method=DELETE" method="POST" style="display: inline;">
+              <button type="submit" class="btn btn-delete" onclick="return confirm('Bu gönderiyi silmek istediğinizden emin misiniz?')">🗑️ Sil</button>
+            </form>
+          </div>
+        <% } %>
+      </div>
+      
+      <div class="post-meta">
+        <span><strong>👤 <%= post.author.username %></strong></span>
+        <span>📅 <%= post.createdAt.toLocaleDateString('tr-TR') %></span>
+        <span class="category-badge"><%= post.kategori %></span>
+      </div>
+      
+      <% if (post.image) { %>
+        <img src="<%= post.image %>" alt="Post resmi" class="post-image">
+      <% } %>
+      
+      <div class="post-content">
+        <%= post.icerik %>
+      </div>
+      
+      <!-- Likes Section -->
+      <div id="likes" class="likes-section">
+        <% if (currentUser) { %>
+          <% if (post.likes && post.likes.some(like => like.toString() === currentUser._id.toString())) { %>
+            <form action="/posts/<%= post._id %>/unlike" method="POST" style="display: inline;">
+              <button type="submit" class="like-btn liked">
+                ❤️ Beğenme (<%= post.likes ? post.likes.length : 0 %>)
+              </button>
+            </form>
+          <% } else { %>
+            <form action="/posts/<%= post._id %>/like" method="POST" style="display: inline;">
+              <button type="submit" class="like-btn">
+                🤍 Beğen (<%= post.likes ? post.likes.length : 0 %>)
+              </button>
+            </form>
+          <% } %>
+        <% } else { %>
+          <span style="color: #666; font-size: 1.1rem;">🤍 Beğen (<%= post.likes ? post.likes.length : 0 %>) - Beğenmek için giriş yapın</span>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div id="comments" class="comments-section">
+      <h2 class="comments-title">💬 Yorumlar (<%= post.comments ? post.comments.length : 0 %>)</h2>
+      
+      <% if (post.comments && post.comments.length > 0) { %>
+        <% post.comments.forEach(function(comment) { %>
+          <div class="comment">
+            <div class="comment-header">
+              <span class="comment-author">👤 <%= comment.author.username %></span>
+              <div class="comment-actions">
+                <!-- Comment Like Button -->
+                <% if (currentUser) { %>
+                  <% if (comment.likes && comment.likes.some(like => like.toString() === currentUser._id.toString())) { %>
+                    <form action="/comments/<%= comment._id %>/unlike" method="POST" style="display: inline;">
+                      <button type="submit" class="comment-like-btn liked" title="Beğenme">
+                        ❤️ <%= comment.likes ? comment.likes.length : 0 %>
+                      </button>
+                    </form>
+                  <% } else { %>
+                    <form action="/comments/<%= comment._id %>/like" method="POST" style="display: inline;">
+                      <button type="submit" class="comment-like-btn" title="Beğen">
+                        🤍 <%= comment.likes ? comment.likes.length : 0 %>
+                      </button>
+                    </form>
+                  <% } %>
+                <% } else { %>
+                  <span class="comment-like-btn">🤍 <%= comment.likes ? comment.likes.length : 0 %></span>
+                <% } %>
+                
+                <% if (currentUser && (currentUser._id.toString() === comment.author._id.toString() || currentUser.isAdmin)) { %>
+                  <form action="/comments/<%= comment._id %>?_method=DELETE" method="POST" style="display: inline;">
+                    <button type="submit" class="comment-delete-btn" onclick="return confirm('Bu yorumu silmek istediğinizden emin misiniz?')">Sil</button>
+                  </form>
+                <% } %>
+              </div>
+            </div>
+            <div class="comment-content"><%= comment.icerik %></div>
+            <div class="comment-date">📅 <%= comment.createdAt.toLocaleDateString('tr-TR') %></div>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div class="empty-comments">
+          <h3>Henüz hiç yorum yok</h3>
+          <p>İlk yorumu siz yapın!</p>
+        </div>
+      <% } %>
+      
+      <% if (currentUser) { %>
+        <form class="comment-form" action="/posts/<%= post._id %>/comments" method="POST">
+          <textarea name="icerik" class="comment-textarea" placeholder="Yorumunuzu yazın..." required></textarea>
+          <button type="submit" class="comment-submit">💬 Yorum Yap</button>
+        </form>
+      <% } else { %>
+        <div style="text-align: center; padding: 30px; color: #666;">
+          <p>Yorum yapmak için <a href="/login" style="color: #667eea; text-decoration: none; font-weight: 600;">giriş yapın</a>.</p>
+        </div>
+      <% } %>
+    </div>
+  </main>
+</body>
+</html>

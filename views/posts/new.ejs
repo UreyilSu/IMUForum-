@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Gönderi - IMUGOSSIP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Geometric Background Shapes */
+        .geometric-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .shape {
+            position: absolute;
+            opacity: 0.05;
+            animation: float 35s infinite ease-in-out;
+        }
+        
+        .shape:nth-child(1) {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            border-radius: 12px;
+            top: 10%;
+            left: 6%;
+            animation-delay: 0s;
+            transform: rotate(45deg);
+        }
+        
+        .shape:nth-child(2) {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            border-radius: 50%;
+            top: 20%;
+            right: 10%;
+            animation-delay: 7s;
+        }
+        
+        .shape:nth-child(3) {
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 40px solid rgba(255, 193, 7, 0.3);
+            top: 30%;
+            left: 10%;
+            animation-delay: 14s;
+        }
+        
+        .shape:nth-child(4) {
+            width: 60px;
+            height: 30px;
+            background: linear-gradient(45deg, #a8e6cf, #7fcdcd);
+            border-radius: 15px;
+            top: 40%;
+            right: 18%;
+            animation-delay: 21s;
+            transform: rotate(-30deg);
+        }
+        
+        .shape:nth-child(5) {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(45deg, #ffd3a5, #fd9853);
+            border-radius: 50%;
+            bottom: 30%;
+            left: 5%;
+            animation-delay: 28s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-12px) rotate(2deg);
+            }
+            50% {
+                transform: translateY(-6px) rotate(-2deg);
+            }
+            75% {
+                transform: translateY(-18px) rotate(1deg);
+            }
+        }
+        
+        .floating-dots {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .dot {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float-dots 25s infinite linear;
+        }
+        
+        .dot:nth-child(1) { top: 15%; left: 15%; animation-delay: 0s; }
+        .dot:nth-child(2) { top: 25%; left: 85%; animation-delay: 5s; }
+        .dot:nth-child(3) { top: 45%; left: 20%; animation-delay: 10s; }
+        .dot:nth-child(4) { top: 65%; left: 80%; animation-delay: 15s; }
+        .dot:nth-child(5) { top: 75%; left: 10%; animation-delay: 20s; }
+        
+        @keyframes float-dots {
+            0%, 100% {
+                transform: translateY(0px) scale(1);
+                opacity: 0.1;
+            }
+            50% {
+                transform: translateY(-20px) scale(1.1);
+                opacity: 0.2;
+            }
+        }
+        
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            color: #333;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar a, .navbar span {
+            color: #333;
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 16px;
+            transition: color 0.3s ease;
+        }
+        
+        .navbar a:hover {
+            color: #667eea;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            width: 90%;
+        }
+        
+        .form-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        
+        .form-card h1 {
+            color: #333;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+        
+        input[type="text"], input[type="file"], select, textarea {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            background: #f8f9fa;
+        }
+        
+        input[type="text"]:focus, input[type="file"]:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-size: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 12px;
+            font-weight: 600;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+        }
+        
+        .breadcrumb {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px 20px;
+            border-radius: 25px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            opacity: 1;
+        }
+        
+        .breadcrumb span {
+            color: white;
+            margin: 0 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                width: 95%;
+            }
+            
+            .form-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Geometric Background Shapes -->
+    <div class="geometric-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    
+    <!-- Floating Dots -->
+    <div class="floating-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+
+    <nav class="navbar">
+        <a href="/" class="logo">IMUGOSSIP</a>
+        <div>
+            <a href="/">Ana Sayfa</a>
+            <a href="/profile">Profil</a>
+            <a href="/logout">Çıkış Yap</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Breadcrumb -->
+        <% if (selectedCategory) { %>
+            <div class="breadcrumb">
+                <a href="/">Ana Sayfa</a>
+                <span>></span>
+                <a href="/category/<%= encodeURIComponent(selectedCategory) %>"><%= selectedCategory %></a>
+                <span>></span>
+                <span>Yeni Başlık</span>
+            </div>
+        <% } %>
+
+        <div class="form-card">
+            <h1><%= selectedCategory ? selectedCategory + ' - Yeni Başlık' : 'Yeni Gönderi Oluştur' %></h1>
+            <form action="/posts" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="baslik">Başlık:</label>
+                    <input type="text" id="baslik" name="baslik" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="kategori">Kategori:</label>
+                    <select id="kategori" name="kategori" required>
+                        <option value="">Kategori seçin</option>
+                        <% Object.keys(categoryInfo).forEach(function(cat) { %>
+                            <option value="<%= cat %>" <%= selectedCategory === cat ? 'selected' : '' %>>
+                                <%= categoryInfo[cat].icon %> <%= cat %>
+                            </option>
+                        <% }); %>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="icerik">İçerik:</label>
+                    <textarea id="icerik" name="icerik" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="image">Resim (isteğe bağlı):</label>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
+                
+                <button type="submit" class="btn">Gönderi Oluştur</button>
+                <a href="/" class="btn btn-secondary" style="text-decoration: none; display: inline-block;">İptal</a>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

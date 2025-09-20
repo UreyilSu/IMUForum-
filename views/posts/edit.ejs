@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gönderi Düzenle - IMUForum</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background: #f5f7fa;
+            color: #333;
+        }
+        .navbar {
+            background-color: #0047ab;
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar a, .navbar span {
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            margin-left: 12px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 24px auto;
+            width: 90%;
+        }
+        .form-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        .form-card h1 {
+            color: #0047ab;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        input[type="text"], input[type="file"], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus, input[type="file"]:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #0047ab;
+        }
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .btn {
+            background-color: #0047ab;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            background-color: #003a8a;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .current-image {
+            margin-top: 10px;
+            max-width: 200px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/">IMUForum</a>
+        <div>
+            <a href="/">Ana Sayfa</a>
+            <a href="/profile">Profil</a>
+            <a href="/logout">Çıkış Yap</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="form-card">
+            <h1>Gönderi Düzenle</h1>
+            <form action="/posts/<%= post._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="baslik">Başlık:</label>
+                    <input type="text" id="baslik" name="baslik" value="<%= post.baslik %>" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="kategori">Kategori:</label>
+                    <select id="kategori" name="kategori" required>
+                        <option value="">Kategori seçin</option>
+                        <option value="Genel" <%= post.kategori === 'Genel' ? 'selected' : '' %>>Genel</option>
+                        <option value="Teknoloji" <%= post.kategori === 'Teknoloji' ? 'selected' : '' %>>Teknoloji</option>
+                        <option value="Eğitim" <%= post.kategori === 'Eğitim' ? 'selected' : '' %>>Eğitim</option>
+                        <option value="Spor" <%= post.kategori === 'Spor' ? 'selected' : '' %>>Spor</option>
+                        <option value="Sanat" <%= post.kategori === 'Sanat' ? 'selected' : '' %>>Sanat</option>
+                        <option value="Müzik" <%= post.kategori === 'Müzik' ? 'selected' : '' %>>Müzik</option>
+                        <option value="Film" <%= post.kategori === 'Film' ? 'selected' : '' %>>Film</option>
+                        <option value="Kitap" <%= post.kategori === 'Kitap' ? 'selected' : '' %>>Kitap</option>
+                        <option value="Oyun" <%= post.kategori === 'Oyun' ? 'selected' : '' %>>Oyun</option>
+                        <option value="Diğer" <%= post.kategori === 'Diğer' ? 'selected' : '' %>>Diğer</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="icerik">İçerik:</label>
+                    <textarea id="icerik" name="icerik" required><%= post.icerik %></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="image">Resim (isteğe bağlı):</label>
+                    <% if (post.image) { %>
+                        <p>Mevcut resim:</p>
+                        <img src="<%= post.image %>" alt="Mevcut resim" class="current-image">
+                    <% } %>
+                    <input type="file" id="image" name="image" accept="image/*">
+                </div>
+                
+                <button type="submit" class="btn">Güncelle</button>
+                <a href="/posts/<%= post._id %>" class="btn btn-secondary" style="text-decoration: none; display: inline-block;">İptal</a>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
+
