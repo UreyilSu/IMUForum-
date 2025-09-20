@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const methodOverride = require('method-override');
 const multer = require('multer');
 const path = require('path');
@@ -32,7 +32,7 @@ app.use(express.static('public'));
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'secret-key',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
