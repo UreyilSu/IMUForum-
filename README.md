@@ -43,11 +43,7 @@ IMUForum, Express.js ve MongoDB kullanılarak geliştirilmiş bir forum uygulama
    http://localhost:3000
    ```
 
-## Admin Erişimi
 
-Varsayılan admin kullanıcısı:
-- **Email:** ureyilbusiness@gmail.com
-- **Şifre:** 6287
 
 ## API Endpoints
 
